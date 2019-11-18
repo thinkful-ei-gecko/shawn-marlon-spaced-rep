@@ -24,7 +24,7 @@
 
 .login-form input {
   width: 50%;
-  height: 2em;
+  height: 3em;
   margin: 1em;
   display: inline-block;
   border-radius: 3px;
@@ -39,4 +39,12 @@
   margin: 1em;
   margin-left: auto;
   margin-right: auto;
+}
+
+
+@media only screen and (min-device-width : 768px) {
+  .login-form {
+    width: 30%;
+    height: 500px;
+  }
 }
