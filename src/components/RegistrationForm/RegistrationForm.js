@@ -41,12 +41,14 @@ class RegistrationForm extends Component {
     const { error } = this.state
     return (
       <form
+        className='registration-form'
         onSubmit={this.handleSubmit}
       >
         <div role='alert'>
           {error && <p>{error}</p>}
         </div>
         <div>
+        <h2 id='sign-up'>Sign up</h2>
           <Label htmlFor='registration-name-input'>
             Enter your name<Required />
           </Label>
