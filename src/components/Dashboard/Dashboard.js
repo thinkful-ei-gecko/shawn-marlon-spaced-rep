@@ -21,7 +21,6 @@ export default class Dashboard extends React.Component {
 
   generateAlphabet = () => {
     const words = this.props.words
-    const convertedWords = words.map(word => word.original.split('').map(char => char === '.' ? '&#8226;': '&#9594;').join(''))
     return words.map(word => {
       return(
         <li key={word.id}>
@@ -43,7 +42,10 @@ export default class Dashboard extends React.Component {
         <>
         <ul className='languages'>
         <li className='language'>
-        <h3 onClick={() => this.handleDropDown('detailsExpand')}>{this.props.language.name}</h3>
+        <h3 onClick={() => this.handleDropDown('detailsExpand')}>
+          {this.props.language.name} 
+          <i class={(this.state.detailsExpand === false) ? "fas fa-chevron-down" : "fas fa-chevron-up"}></i>
+          </h3>
          {this.renderLanguageDetails()}
         </li>
         </ul>
@@ -60,10 +62,17 @@ export default class Dashboard extends React.Component {
       return (
         <ul className='language-details'>
         <li>
-          <h3 onClick={() => this.handleDropDown('progressExpand')}>Your Progress</h3>
+          <h3 onClick={() => this.handleDropDown('progressExpand')}>
+            Your Progress
+            <i class={(this.state.progressExpand === false) ? "fas fa-chevron-down" : "fas fa-chevron-up"}></i>
+            </h3>
+          {this.renderProgress()}
         </li>
         <li>
-        <h3 onClick={() => this.handleDropDown('alphabetExpand')}>Alphabet</h3>
+          <h3 onClick={() => this.handleDropDown('alphabetExpand')}>
+            Alphabet
+            <i class={(this.state.alphabetExpand === false) ? "fas fa-chevron-down" : "fas fa-chevron-up"}></i>
+          </h3>
           {this.renderAlphabet()}
         </li>
       </ul>
@@ -71,6 +80,17 @@ export default class Dashboard extends React.Component {
     }
     else {
       return null;
+    }
+  }
+
+  renderProgress = () => {
+    if(this.state.progressExpand === true) {
+      return (
+       <div className='progress'>
+         <p>Total Score: {this.props.language.total_score}</p>
+         <button>Practice</button>
+       </div>
+      )
     }
   }
 
@@ -89,10 +109,13 @@ export default class Dashboard extends React.Component {
   
 
   render() {
-    console.log(this.state)
+    console.log(this.props.language)
     return (
       <div className='dashboard'>
-        <h2 onClick={() => this.handleDropDown('languagesExpand')}>Your Languages</h2>
+        <h2 onClick={() => this.handleDropDown('languagesExpand')}>
+          Your Languages         
+          <i class={(this.state.languagesExpand === false) ? "fas fa-chevron-down" : "fas fa-chevron-up"}></i>
+        </h2>
         {this.renderLanguages()}
       </div>
     )

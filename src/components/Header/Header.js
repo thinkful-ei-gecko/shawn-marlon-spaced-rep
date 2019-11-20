@@ -7,7 +7,8 @@ import './Header.css'
 class Header extends Component {
   static contextType = UserContext
   state = {
-    expanded: false
+    expanded: false,
+    loggedIn: false,
   }
 
   handleLogoutClick = () => {
@@ -23,10 +24,6 @@ class Header extends Component {
   renderLogoutLink() {
     if(this.state.expanded){
     return (
-      <div>
-        <span>
-          {this.context.user.name}
-        </span>
         <nav>
           <Link
             onClick={this.handleLogoutClick}
@@ -34,7 +31,6 @@ class Header extends Component {
             Logout
           </Link>
         </nav>
-      </div>
      )
     }
   }
@@ -51,20 +47,25 @@ class Header extends Component {
     }
   }
 
+
   render() {
-    console.log(this.state)
+    console.log(this.context.user.name)
     return (
       <header>
         <h1>
           <Link to='/'>
             spaced repetition
           </Link>
-          <p>&#8226;&#8226;&#8226; &#8226;&#9594;&#9594;&#8226; &#8226;&#9594; &#9594;&#8226;&#9594;&#8226;  &#8226; &#9594;&#8226;&#8226;</p>
-          <i class="fas fa-bars" onClick={this.handleHamburger}></i>
-          {TokenService.hasAuthToken()
-          ? this.renderLogoutLink()
-          : this.renderLoginLink()}
         </h1>
+          <p>&#8226;&#8226;&#8226; &#8226;&#9594;&#9594;&#8226; &#8226;&#9594; &#9594;&#8226;&#9594;&#8226;  &#8226; &#9594;&#8226;&#8226;</p>
+          <span>{this.context.user.name ? this.context.user.name : null}</span>
+          <div className='hamburger-menu'>
+            <i class="fas fa-bars" onClick={this.handleHamburger}></i>
+            {TokenService.hasAuthToken()
+            ? this.renderLogoutLink()
+            : this.renderLoginLink()}
+          </div>
+
       </header>
     );
   }
