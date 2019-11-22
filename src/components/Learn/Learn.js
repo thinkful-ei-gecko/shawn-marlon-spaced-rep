@@ -42,13 +42,12 @@ export default class Learn extends React.Component {
     })
     ApiService.getLanguageHead()
     .then(res => {
-      console.log(res)
       this.context.setCurrentWord({
         totalScore: res.totalScore,
         nextWord: res.nextWord,
         wordCorrectCount: res.wordCorrectCount,
         wordIncorrectCount: res.wordIncorrectCount,
-        translation: res.translation,
+        answer: res.answer,
       })
     })
   }
@@ -58,7 +57,7 @@ export default class Learn extends React.Component {
       return (
         <div className='feedback'>
           <h2>You were correct! :D</h2>
-          <p>The correct translation for {this.context.currentWord.translation} was  </p>
+          <p>The correct translation for {this.context.currentWord.answer} was  </p>
         </div>
       )
     }
@@ -66,7 +65,7 @@ export default class Learn extends React.Component {
       return (
         <div className='feedback'>
           <h2>Good try, but but not quite right :(</h2>
-          <p>The correct translation for {this.context.currentWord.translation} was  </p>
+          <p>The correct translation for {this.context.currentWord.answer} was  </p>
         </div>
       )
     }
@@ -74,13 +73,11 @@ export default class Learn extends React.Component {
 
   handleSubmitAnswer = e => {
     e.preventDefault();
-    console.log('Submit fired!')
     this.setState({
       answered: true,
     })
     ApiService.postGuess(this.state)
     .then(res => {
-      console.log(res)
       this.setState({
         isCorrect: res.isCorrect,
       })
@@ -94,7 +91,6 @@ export default class Learn extends React.Component {
   }
 
   render() {
-    console.log(this.state)
     return (
       <>
       {this.renderFeedBack()}

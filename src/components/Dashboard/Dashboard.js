@@ -22,7 +22,6 @@ export default class Dashboard extends React.Component {
 
   generateAlphabet = () => {
     const words = this.props.words.sort((a, b) => a.id - b.id)
-    console.log(words)
     return words.map(word => {
       return(
         <li key={word.id}>
@@ -111,7 +110,6 @@ export default class Dashboard extends React.Component {
   
 
   render() {
-    console.log(this.props.language)
     return (
       <div className='dashboard'>
         <h2 onClick={() => this.handleDropDown('languagesExpand')}>

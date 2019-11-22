@@ -57,7 +57,6 @@ class Header extends Component {
 
 
   render() {
-    console.log(this.context.user.name)
     return (
       <header>
         <h1>

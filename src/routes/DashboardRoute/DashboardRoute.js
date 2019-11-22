@@ -31,7 +31,6 @@ componentDidMount() {
   }
 
   render() {
-    console.log(this.context.userDetails)
     return (
       <section className='dashboard'>
         {this.renderDashboard()}
