@@ -1,3 +1,8 @@
+.cypress {
+  display: none;
+}
+
+
 .dashboard {
   display: flex;
   flex-direction: column;
@@ -10,15 +15,13 @@
 
 .fas {
   float: right;
-  margin-top: 3%
 }
 .dashboard h2, h3 {
-  border: 2px solid black;
   font-size: 1em;
   padding: 1em;
   margin: 0;
   border-radius: 5px;
-  margin: 3px;
+  margin: 5px;
   width: 100%;
   background-color: #eee;
 }
@@ -26,7 +29,6 @@
 .dashboard ul {
   list-style: none;
   margin: 0px;
-  padding: none;
 }
 
 .languages, .language-details{
@@ -34,8 +36,12 @@
 }
 
 .alphabet {
-  margin: 5px;
-  background-color: gray;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 0 0 0;
+  background-color: white;
+  border-radius: 5px;
 }
 
 .alphabet li {
@@ -53,15 +59,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  border: 1px solid black;
+  border-bottom-right-radius: 5px;
   margin: 0;
+  margin-left: auto;
+  margin-right: auto;
   padding: 0;
+  background-color: white;
+  width: 98%;
+  text-align: center;
 }
 
-.progress button {
+.progress a {
+  display: block;
   width: 30%;
+}
+
+.progress a button {
+  width: 100%;
   margin: 0.5em;
   height: 50px;
   border-radius: 5px;
   font-weight: 600;
+}
+
+@media only screen and (min-device-width : 768px) {
+ .dashboard {
+   margin-top: 1%;
+   width: 75%;
+   margin-left: auto;
+   margin-right: auto;
+ }
 }

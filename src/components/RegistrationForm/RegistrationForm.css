@@ -1,5 +1,5 @@
 .registration-form {
-  border: 1px solid black;
+  border: 3px ridge gray;
   display: flex;
   flex-direction: column;
   width: 80%;

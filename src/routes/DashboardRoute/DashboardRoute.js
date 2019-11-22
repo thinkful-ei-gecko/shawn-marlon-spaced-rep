@@ -19,7 +19,10 @@ componentDidMount() {
   renderDashboard() {
     if(Object.keys(this.context.userDetails).length) {
       return (
-        <Dashboard words={this.context.userDetails.words} language={this.context.userDetails.language}/>
+        <Dashboard 
+        words={this.context.userDetails.words} 
+        language={this.context.userDetails.language}
+        />
       )
     }
     else {
@@ -28,6 +31,7 @@ componentDidMount() {
   }
 
   render() {
+    console.log(this.context.userDetails)
     return (
       <section className='dashboard'>
         {this.renderDashboard()}

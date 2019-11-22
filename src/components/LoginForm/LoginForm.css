@@ -1,5 +1,5 @@
 .login-form {
-  border: 1px solid black;
+  border: 3px ridge gray;
   display: flex;
   flex-direction: column;
   width: 80%;
@@ -45,6 +45,6 @@
 @media only screen and (min-device-width : 768px) {
   .login-form {
     width: 30%;
-    height: 500px;
+    height: 400px;
   }
 }

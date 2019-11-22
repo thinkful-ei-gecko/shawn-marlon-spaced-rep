@@ -26,6 +26,14 @@ class Header extends Component {
     return (
         <nav>
           <Link
+            to='/'>
+            Home
+          </Link>
+          <Link
+            to='/learn'>
+            Learn
+          </Link>
+          <Link
             onClick={this.handleLogoutClick}
             to='/login'>
             Logout
@@ -57,15 +65,34 @@ class Header extends Component {
             spaced repetition
           </Link>
         </h1>
-          <p>&#8226;&#8226;&#8226; &#8226;&#9594;&#9594;&#8226; &#8226;&#9594; &#9594;&#8226;&#9594;&#8226;  &#8226; &#9594;&#8226;&#8226;</p>
           <span>{this.context.user.name ? this.context.user.name : null}</span>
           <div className='hamburger-menu'>
             <i class="fas fa-bars" onClick={this.handleHamburger}></i>
             {TokenService.hasAuthToken()
             ? this.renderLogoutLink()
             : this.renderLoginLink()}
+            
           </div>
-
+          {/* <nav className='cypress-nav'>
+          <Link to='/login'>Login</Link>
+          {' '}
+          <Link to='/register'>Sign up</Link>
+        </nav> */}
+        {/* <nav>
+          <Link
+            to='/'>
+            Home
+          </Link>
+          <Link
+            to='/learn'>
+            Learn
+          </Link>
+          <Link
+            onClick={this.handleLogoutClick}
+            to='/login'>
+            Logout
+          </Link>
+        </nav> */}
       </header>
     );
   }
