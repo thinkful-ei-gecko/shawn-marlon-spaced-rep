@@ -93,7 +93,7 @@ export class UserProvider extends Component {
     this.setState({ wordCorrectCount })
   }
 
-  updateIncorrectCount = wordIncorrectCount => {
+  updateWordIncorrectCount = wordIncorrectCount => {
     this.setState({ wordIncorrectCount })
   }
 
@@ -159,7 +159,7 @@ export class UserProvider extends Component {
       nextWord: this.state.nextWord,
       totalScore: this.state.totalScore,
       wordCorrectCount: this.state.wordCorrectCount,
-      wordIncorrectCount: this.state.incorrectCount,
+      wordIncorrectCount: this.state.wordIncorrectCount,
       answer: this.state.answer,
       isCorrect: this.state.isCorrect,
       guess: this.state.guess,

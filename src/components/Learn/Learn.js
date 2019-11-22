@@ -41,6 +41,7 @@ export default class Learn extends React.Component {
     })
     ApiService.getLanguageHead()
     .then(res => {
+      this.context.updateNextWord(res.nextWord)
       this.context.updateWordCorrectCount(res.wordCorrectCount)
       this.context.updateWordIncorrectCount(res.wordIncorrectCount)
       this.context.updateTotalScore(res.totalScore)
@@ -74,7 +75,7 @@ export default class Learn extends React.Component {
     this.setState({
       answered: true,
     })
-    ApiService.postGuess(this.state.guess)
+    ApiService.postGuess({guess: this.state.guess})
     .then(res => {
       this.context.updateWordCorrectCount(res.wordCorrectCount)
       this.context.updateWordIncorrectCount(res.wordIncorrectCount)
@@ -92,13 +93,15 @@ export default class Learn extends React.Component {
 
   render() {
     const { totalScore, wordCorrectCount, wordIncorrectCount, nextWord, isCorrect, answer} = this.context;
-    console.log(this.context.answer)
+    console.log(this.state)
     return (
       <>
       {this.renderFeedBack()}
       <h2>Translate the word:</h2>
-      <span className='cypress'></span>
-      <p className='DisplayScore'>Your total score is: {totalScore}</p>
+      <span className='cypress'>{nextWord}</span>
+      <p className='DisplayScore'>
+        Your total score is: {totalScore}
+        </p>
       <p className='current-word'>
         {nextWord
             .split('')
