@@ -45,16 +45,18 @@
 #submit-button {
   font-weight: 600;
   border-radius: 5px;
+  height: 2.2em;
 }
 
 #next-button {
-  width: 50%;
   margin: 1em;
   margin-left: auto;
   margin-right: auto;
-  height: 2em;
+  height: 3em;
   border-radius: 5px;
   font-weight: 600;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 .learn form {
@@ -68,10 +70,6 @@
   font-size: 1.2em;
 }
 
-#next-button {
-  height: 3em;
-  width: 30%;
-}
 @media only screen and (min-device-width : 768px) {
   .learn {
     width: 30%;

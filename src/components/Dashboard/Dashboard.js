@@ -41,10 +41,12 @@ export default class Dashboard extends React.Component {
   generateCypressAlphabet = () => {
     return this.props.words.map(word => {
       return(
-        <li key={word.id}>
+        <li className='cypress' key={word.id}>
           <h4>{word.original}</h4>
           <p>
-           {word.translation} {word.correct_count} {word.incorrect_count}
+           {word.translation} 
+           correct answer count: {word.correct_count} 
+           incorrect answer count: {word.incorrect_count}
           </p>
         </li>
       )
@@ -114,31 +116,36 @@ export default class Dashboard extends React.Component {
   renderAlphabet = () => {
     if(this.state.alphabetExpand === true) {
       return (
-        <ul className='alphabet'>{this.generateAlphabet()}</ul>
+        <ul className='cypress-alphabet'>{this.generateAlphabet()}</ul>
       )
     }
     else {
-
+      return null;
     }
   }
   
 
   render() {
-    console.log(this.props.language)
+
     return (
-      <div className='dashboard'>
-                {/* <h2 className='cypress'>
-          {this.props.language.name}
-          {this.props.language.total_score}
-        </h2>
+      <section className='dashboard'>
+       {/* Criteria for cypress tests as component dropdown does not register */}
+        <h2 className='cypress'>
+            {this.props.language.name}
+            Total correct answers: {this.props.language.total_score}
+          </h2>
+          <Link to='learn'>
+          <h2 className='cypress'>Start practicing</h2>
+          </Link>
         <h3 className='cypress'>Words to practice</h3>
-        {this.generateCypressAlphabet()} */}
+        {this.generateCypressAlphabet()}
+       {/* END Criteria for cypress tests as component dropdown does not register */}
         <h2 onClick={() => this.handleDropDown('languagesExpand')}>
           Your Languages         
           <i class={(this.state.languagesExpand === false) ? "fas fa-chevron-down" : "fas fa-chevron-up"}></i>
         </h2>
         {this.renderLanguages()}
-      </div>
+      </section>
     )
   }
 }

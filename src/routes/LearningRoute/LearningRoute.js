@@ -17,7 +17,7 @@ class LearningRoute extends Component {
         nextWord: res.nextWord,
         wordCorrectCount: res.wordCorrectCount,
         wordIncorrectCount: res.wordIncorrectCount,
-        translation: res.translation,
+        answer: res.translation,
       })
     })
   }

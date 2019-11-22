@@ -22,17 +22,8 @@ class Header extends Component {
   }
 
   renderLogoutLink() {
-    if(this.state.expanded){
     return (
         <nav>
-          <Link
-            to='/'>
-            Home
-          </Link>
-          <Link
-            to='/learn'>
-            Learn
-          </Link>
           <Link
             onClick={this.handleLogoutClick}
             to='/login'>
@@ -40,11 +31,9 @@ class Header extends Component {
           </Link>
         </nav>
      )
-    }
   }
 
   renderLoginLink() {
-    if(this.state.expanded){
       return (
         <nav>
           <Link to='/login'>Login</Link>
@@ -52,12 +41,10 @@ class Header extends Component {
           <Link to='/register'>Sign up</Link>
         </nav>
       )
-    }
   }
 
 
   render() {
-    console.log(this.context.user.name)
     return (
       <header>
         <h1>
@@ -66,33 +53,9 @@ class Header extends Component {
           </Link>
         </h1>
           <span>{this.context.user.name ? this.context.user.name : null}</span>
-          <div className='hamburger-menu'>
-            <i class="fas fa-bars" onClick={this.handleHamburger}></i>
             {TokenService.hasAuthToken()
             ? this.renderLogoutLink()
             : this.renderLoginLink()}
-            
-          </div>
-          {/* <nav className='cypress-nav'>
-          <Link to='/login'>Login</Link>
-          {' '}
-          <Link to='/register'>Sign up</Link>
-        </nav> */}
-        {/* <nav>
-          <Link
-            to='/'>
-            Home
-          </Link>
-          <Link
-            to='/learn'>
-            Learn
-          </Link>
-          <Link
-            onClick={this.handleLogoutClick}
-            to='/login'>
-            Logout
-          </Link>
-        </nav> */}
       </header>
     );
   }
