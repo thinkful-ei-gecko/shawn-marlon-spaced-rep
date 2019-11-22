@@ -25,7 +25,7 @@ export default class Dashboard extends React.Component {
     console.log(words)
     return words.map(word => {
       return(
-        <li className='cypress' key={word.id}>
+        <li key={word.id}>
           <h4>{word.translation}</h4>
           <p>
             {word.original
@@ -41,10 +41,12 @@ export default class Dashboard extends React.Component {
   generateCypressAlphabet = () => {
     return this.props.words.map(word => {
       return(
-        <li key={word.id}>
+        <li className='cypress' key={word.id}>
           <h4>{word.original}</h4>
           <p>
-           {word.translation} {word.correct_count} {word.incorrect_count}
+           {word.translation} 
+           correct answer count: {word.correct_count} 
+           incorrect answer count: {word.incorrect_count}
           </p>
         </li>
       )
@@ -127,12 +129,12 @@ export default class Dashboard extends React.Component {
     console.log(this.props.language)
     return (
       <div className='dashboard'>
-                {/* <h2 className='cypress'>
+        <h2 className='cypress'>
           {this.props.language.name}
-          {this.props.language.total_score}
+          Total correct answers: {this.props.language.total_score}
         </h2>
         <h3 className='cypress'>Words to practice</h3>
-        {this.generateCypressAlphabet()} */}
+        {this.generateCypressAlphabet()}
         <h2 onClick={() => this.handleDropDown('languagesExpand')}>
           Your Languages         
           <i class={(this.state.languagesExpand === false) ? "fas fa-chevron-down" : "fas fa-chevron-up"}></i>
