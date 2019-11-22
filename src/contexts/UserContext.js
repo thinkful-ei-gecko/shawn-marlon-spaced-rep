@@ -7,9 +7,12 @@ const UserContext = React.createContext({
   user: {},
   userDetails: {},
   currentWord: {},
+  nextWord: {},
   totalScore: 0,
   wordCorrectCount: 0,
   wordIncorrectCount: 0,
+  isCorrect: null,
+  answer: null,
   guess: {},
   error: null,
   setError: () => {},
@@ -19,8 +22,10 @@ const UserContext = React.createContext({
   setCurrentWord: () => {},
   setGuess: () => {},
   updateTotalScore: () => {},
-  updateCorrectCount: () => {},
-  updateIncorrectCount: () => {},
+  updateWordCorrectCount: () => {},
+  updateWordIncorrectCount: () => {},
+  updateIsCorrect: () => {},
+  updateAnswer: () => {},
   processLogin: () => {},
   processLogout: () => {},
 })
@@ -30,7 +35,7 @@ export default UserContext
 export class UserProvider extends Component {
   constructor(props) {
     super(props)
-    const state = { user: {}, userDetails: {}, currentWord: {}, totalScore: 0, wordCorrectCount: 0, wordIncorrectCount: 0, guess: {},  error: null }
+    const state = { user: {}, userDetails: {}, currentWord: {}, nextWord: '', totalScore: 0, wordCorrectCount: 0, wordIncorrectCount: 0, isCorrect: null, answer: null, guess: {},  error: null }
 
     const jwtPayload = TokenService.parseAuthToken()
 
@@ -84,6 +89,27 @@ export class UserProvider extends Component {
     this.setState({ totalScore })
   }
 
+  updateWordCorrectCount = wordCorrectCount => {
+    this.setState({ wordCorrectCount })
+  }
+
+  updateIncorrectCount = wordIncorrectCount => {
+    this.setState({ wordIncorrectCount })
+  }
+
+  updateIsCorrect = isCorrect => {
+    this.setState({ isCorrect })
+  }
+
+  updateAnswer = answer => {
+    this.setState({ answer })
+  }
+
+  updateNextWord = nextWord => {
+    this.setState({ nextWord })
+  }
+
+
   processLogin = authToken => {
     TokenService.saveAuthToken(authToken)
     const jwtPayload = TokenService.parseAuthToken()
@@ -130,14 +156,25 @@ export class UserProvider extends Component {
       user: this.state.user,
       userDetails: this.state.userDetails,
       currentWord: this.state.currentWord,
+      nextWord: this.state.nextWord,
       totalScore: this.state.totalScore,
+      wordCorrectCount: this.state.wordCorrectCount,
+      wordIncorrectCount: this.state.incorrectCount,
+      answer: this.state.answer,
+      isCorrect: this.state.isCorrect,
+      guess: this.state.guess,
       error: this.state.error,
       setError: this.setError,
       clearError: this.clearError,
       setUser: this.setUser,
       setUserDetails: this.setUserDetails,
       setCurrentWord: this.setCurrentWord,
+      updateNextWord: this.updateNextWord,
       updateTotalScore: this.updateTotalScore,
+      updateWordCorrectCount: this.updateWordCorrectCount,
+      updateWordIncorrectCount: this.updateWordIncorrectCount,
+      updateAnswer: this.updateAnswer,
+      updateIsCorrect: this.updateIsCorrect,
       processLogin: this.processLogin,
       processLogout: this.processLogout,
     }

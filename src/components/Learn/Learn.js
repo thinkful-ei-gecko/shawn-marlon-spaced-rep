@@ -9,18 +9,6 @@ export default class Learn extends React.Component {
   state = {
     guess: '',
     answered: false,
-    isCorrect: null,
-    wordCorrectCount: 0,
-    wordIncorrectCount: 0,
-    nextWord: '',
-  }
-
-  componentDidMount = () => {
-    this.setState({
-      wordCorrectCount: this.context.currentWord.wordCorrectCount,
-      wordIncorrectCount: this.context.currentWord.wordIncorrectCount,
-      nextWord: this.context.currentWord.nextWord,
-    })
   }
 
   renderNextButton = () => {
@@ -53,31 +41,28 @@ export default class Learn extends React.Component {
     })
     ApiService.getLanguageHead()
     .then(res => {
-      console.log(res)
-      this.context.setCurrentWord({
-        totalScore: res.totalScore,
-        nextWord: res.nextWord,
-        wordCorrectCount: res.wordCorrectCount,
-        wordIncorrectCount: res.wordIncorrectCount,
-        answer: res.translation,
-      })
+      this.context.updateWordCorrectCount(res.wordCorrectCount)
+      this.context.updateWordIncorrectCount(res.wordIncorrectCount)
+      this.context.updateTotalScore(res.totalScore)
+      this.context.updateAnswer(res.translation)
+      this.context.updateIsCorrect(res.isCorrect)
     })
   }
 
   renderFeedBack = () => {
-    if(this.state.isCorrect === true) {
+    if(this.context.isCorrect === true) {
       return (
         <div className='feedback'>
           <h2>You were correct! :D</h2>
-          <p>The correct translation was {this.context.currentWord.translation} </p>
+          <p>The correct translation was {this.context.answer} </p>
         </div>
       )
     }
-    else if (this.state.isCorrect === false) {
+    else if (this.context.isCorrect === false) {
       return (
         <div className='feedback'>
           <h2>Good try, but but not quite right :(</h2>
-          <p>The correct translation was {this.context.currentWord.translation} </p>
+          <p>The correct translation was {this.context.answer} </p>
         </div>
       )
     }
@@ -89,17 +74,14 @@ export default class Learn extends React.Component {
     this.setState({
       answered: true,
     })
-    ApiService.postGuess(this.state)
+    ApiService.postGuess(this.state.guess)
     .then(res => {
-      console.log(res)
-      this.setState({
-        nextWord: res.nextWord,
-        isCorrect: res.isCorrect,
-        totalScore: res.totalScore,
-        wordCorrectCount: res.wordCorrectCount,
-        wordIncorrectCount: res.wordIncorrectCount,
+      this.context.updateWordCorrectCount(res.wordCorrectCount)
+      this.context.updateWordIncorrectCount(res.wordIncorrectCount)
+      this.context.updateTotalScore(res.totalScore)
+      this.context.updateAnswer(res.answer)
+      this.context.updateIsCorrect(res.isCorrect)
       })
-    })
   }
 
   handleGuessField = (answer) => {
@@ -109,17 +91,16 @@ export default class Learn extends React.Component {
   }
 
   render() {
-    const { totalScore } = this.context;
-    console.log(this.state.totalScore)
-    console.log(this.context.totalScore)
+    const { totalScore, wordCorrectCount, wordIncorrectCount, nextWord, isCorrect, answer} = this.context;
+    console.log(this.context.answer)
     return (
       <>
       {this.renderFeedBack()}
       <h2>Translate the word:</h2>
-      <span className='cypress'>{this.state.nextWord}</span>
+      <span className='cypress'></span>
       <p className='DisplayScore'>Your total score is: {totalScore}</p>
       <p className='current-word'>
-        {this.context.currentWord.nextWord
+        {nextWord
             .split('')
             .map(char => char === '.' ?'\u2689' : '\u268A')
             .join('')}
@@ -129,8 +110,8 @@ export default class Learn extends React.Component {
       <input type='text' id='learn-guess-input' onChange={e => this.handleGuessField(e.target.value)} required></input>
       {this.renderSubmitButton()}
       </form>
-      <p id='correct'>You have answered this word correctly {this.state.wordCorrectCount} times.</p>
-      <p id='incorrect'>You have answered this word incorrectly {this.state.wordIncorrectCount} times.</p>
+      <p id='correct'>You have answered this word correctly {wordCorrectCount} times.</p>
+      <p id='incorrect'>You have answered this word incorrectly {wordIncorrectCount} times.</p>
       {this.renderNextButton()}
       </>
     )

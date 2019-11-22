@@ -11,34 +11,20 @@ class LearningRoute extends Component {
   componentDidMount() {
     ApiService.getLanguageHead()
     .then(res => {
-      console.log(res)
-      this.context.setCurrentWord({
-        totalScore: res.total_score,
-        nextWord: res.nextWord,
-        wordCorrectCount: res.wordCorrectCount,
-        wordIncorrectCount: res.wordIncorrectCount,
-        answer: res.translation,
-      })
+      this.context.updateNextWord(res.nextWord)
+      this.context.updateWordCorrectCount(res.wordCorrectCount)
+      this.context.updateWordIncorrectCount(res.wordIncorrectCount)
       this.context.updateTotalScore(res.total_score)
+      this.context.updateAnswer(res.translation)
+      this.context.updateIsCorrect(res.isCorrect)
     })
-  }
-
-  renderLearn () {
-    if(Object.keys(this.context.currentWord).length) {
-      return (
-        <Learn currentWord={this.context.currentWord}/>
-      )
-    }
-    else {
-      return null;
-    }
   }
 
   render() {
     console.log(this.context.currentWord)
     return (
       <section className='learn'>
-       {this.renderLearn()}
+       <Learn />
       </section>
     );
   }
