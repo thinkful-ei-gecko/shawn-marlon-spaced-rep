@@ -95,7 +95,6 @@ export default class Learn extends React.Component {
       <>
       {this.renderFeedBack()}
       <h2>Translate the word:</h2>
-      <span>{this.context.currentWord.nextWord}</span>
       <p>Your total score is: {this.context.currentWord.totalScore}</p>
       <p className='current-word'>
         {this.context.currentWord.nextWord
