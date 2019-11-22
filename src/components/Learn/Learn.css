@@ -38,6 +38,7 @@
 
 .learn input {
   width: 50%;
+  height: 2em;
   border-radius: 3px;
   margin: 0.5em;
 }
@@ -45,7 +46,7 @@
 #submit-button {
   font-weight: 600;
   border-radius: 5px;
-  height: 2.2em;
+  height: 2.5em;
 }
 
 #next-button {
@@ -70,8 +71,25 @@
   font-size: 1.2em;
 }
 
+#correct {
+  padding: 1em;
+  background-color: #ccc;
+  margin: 0;
+}
+
+#incorrect {
+  padding: 1em;
+  margin: 0;
+  color: white;
+  background-color: black;
+}
+
 @media only screen and (min-device-width : 768px) {
   .learn {
     width: 30%;
+  }
+
+  .learn input {
+    width: 33%;
   }
 }

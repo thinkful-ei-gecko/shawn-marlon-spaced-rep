@@ -10,7 +10,6 @@ export default class Learn extends React.Component {
     guess: '',
     answered: false,
     isCorrect: null,
-    totalScore: 0,
     wordCorrectCount: 0,
     wordIncorrectCount: 0,
     nextWord: '',
@@ -18,7 +17,6 @@ export default class Learn extends React.Component {
 
   componentDidMount = () => {
     this.setState({
-      totalScore: this.context.currentWord.totalScore,
       wordCorrectCount: this.context.currentWord.wordCorrectCount,
       wordIncorrectCount: this.context.currentWord.wordIncorrectCount,
       nextWord: this.context.currentWord.nextWord,
@@ -111,13 +109,15 @@ export default class Learn extends React.Component {
   }
 
   render() {
-    console.log(this.context.currentWord)
+    const { totalScore } = this.context;
+    console.log(this.state.totalScore)
+    console.log(this.context.totalScore)
     return (
       <>
       {this.renderFeedBack()}
       <h2>Translate the word:</h2>
       <span className='cypress'>{this.state.nextWord}</span>
-      <p className='DisplayScore'>Your total score is: {this.state.totalScore}</p>
+      <p className='DisplayScore'>Your total score is: {totalScore}</p>
       <p className='current-word'>
         {this.context.currentWord.nextWord
             .split('')
@@ -129,8 +129,8 @@ export default class Learn extends React.Component {
       <input type='text' id='learn-guess-input' onChange={e => this.handleGuessField(e.target.value)} required></input>
       {this.renderSubmitButton()}
       </form>
-      <p>You have answered this word correctly {this.state.wordCorrectCount} times.</p>
-      <p>You have answered this word incorrectly {this.state.wordIncorrectCount} times.</p>
+      <p id='correct'>You have answered this word correctly {this.state.wordCorrectCount} times.</p>
+      <p id='incorrect'>You have answered this word incorrectly {this.state.wordIncorrectCount} times.</p>
       {this.renderNextButton()}
       </>
     )

@@ -19,6 +19,7 @@ class LearningRoute extends Component {
         wordIncorrectCount: res.wordIncorrectCount,
         answer: res.translation,
       })
+      this.context.updateTotalScore(res.total_score)
     })
   }
 

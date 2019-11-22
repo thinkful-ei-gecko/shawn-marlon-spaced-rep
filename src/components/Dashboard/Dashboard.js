@@ -133,6 +133,9 @@ export default class Dashboard extends React.Component {
           {this.props.language.name}
           Total correct answers: {this.props.language.total_score}
         </h2>
+        <Link to='learn'>
+          <h2 className='cypress'>Start practicing</h2>
+          </Link>
         <h3 className='cypress'>Words to practice</h3>
         {this.generateCypressAlphabet()}
         <h2 onClick={() => this.handleDropDown('languagesExpand')}>
