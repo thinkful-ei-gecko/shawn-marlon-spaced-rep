@@ -14,7 +14,7 @@ class LearningRoute extends Component {
       this.context.updateNextWord(res.nextWord)
       this.context.updateWordCorrectCount(res.wordCorrectCount)
       this.context.updateWordIncorrectCount(res.wordIncorrectCount)
-      this.context.updateTotalScore(res.total_score)
+      this.context.updateTotalScore(res.totalScore)
       this.context.updateAnswer(res.translation)
       this.context.updateIsCorrect(res.isCorrect)
     })

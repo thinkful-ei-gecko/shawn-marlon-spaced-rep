@@ -33,8 +33,7 @@ export default class Learn extends React.Component {
     }
   }
 
-  handleNextButton = e => {
-    e.preventDefault();
+  handleNextButton = () => {
     this.setState({
       answered: false,
       isCorrect: null
@@ -93,21 +92,22 @@ export default class Learn extends React.Component {
 
   render() {
     const { totalScore, wordCorrectCount, wordIncorrectCount, nextWord, isCorrect, answer} = this.context;
-    console.log(this.state)
+    console.log(totalScore)
     return (
       <>
       {this.renderFeedBack()}
       <h2>Translate the word:</h2>
       <span className='cypress'>{nextWord}</span>
       <p className='DisplayScore'>
-        Your total score is: {totalScore}
-        </p>
+        Your total score is: {this.context.totalScore}
+      </p>
       <p className='current-word'>
         {nextWord
             .split('')
             .map(char => char === '.' ?'\u2689' : '\u268A')
             .join('')}
       </p>
+
       <form onSubmit={this.handleSubmitAnswer}>
       <label for='learn-guess-input'>What's the translation for this word?</label>
       <input type='text' id='learn-guess-input' onChange={e => this.handleGuessField(e.target.value)} required></input>
