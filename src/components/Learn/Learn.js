@@ -11,6 +11,25 @@ export default class Learn extends React.Component {
     answered: false,
   }
 
+  componentDidMount() {
+    ApiService.getLanguageHead()
+    .then(res => {
+      this.context.updateNextWord(res.nextWord)
+      this.context.updateWordCorrectCount(res.wordCorrectCount)
+      this.context.updateWordIncorrectCount(res.wordIncorrectCount)
+      this.context.updateTotalScore(res.total_score)
+      this.context.updateAnswer(res.translation)
+      this.context.updateIsCorrect(res.isCorrect)
+    })
+    .then(() => {
+      this.setState({
+        totalScore: this.context.totalScore,
+        correctScore: this.context.wordCorrectCount,
+        incorrectScore: this.context.wordIncorrectCount,
+      })
+    })
+
+  }
   renderNextButton = () => {
     if(this.state.answered) {
       return (
@@ -36,14 +55,17 @@ export default class Learn extends React.Component {
   handleNextButton = () => {
     this.setState({
       answered: false,
-      isCorrect: null
+      isCorrect: null,
+      totalScore: this.context.totalScore,
+      correctScore: this.context.wordCorrectCount,
+      incorrectScore: this.context.wordIncorrectCount,
     })
     ApiService.getLanguageHead()
     .then(res => {
       this.context.updateNextWord(res.nextWord)
       this.context.updateWordCorrectCount(res.wordCorrectCount)
       this.context.updateWordIncorrectCount(res.wordIncorrectCount)
-      this.context.updateTotalScore(res.totalScore)
+      this.context.updateTotalScore(res.total_score)
       this.context.updateAnswer(res.translation)
       this.context.updateIsCorrect(res.isCorrect)
     })
@@ -78,9 +100,18 @@ export default class Learn extends React.Component {
     .then(res => {
       this.context.updateWordCorrectCount(res.wordCorrectCount)
       this.context.updateWordIncorrectCount(res.wordIncorrectCount)
-      this.context.updateTotalScore(res.totalScore)
+      this.context.updateTotalScore(res.total_score)
       this.context.updateAnswer(res.answer)
       this.context.updateIsCorrect(res.isCorrect)
+      if(res.isCorrect) {
+        this.setState({
+          totalScore: this.state.totalScore +1,
+          correctScore: this.state.correctScore + 1}
+          )
+      }
+      else {
+        this.setState({incorrectScore: this.state.incorrectScore + 1})
+      }
       })
   }
 
@@ -92,14 +123,13 @@ export default class Learn extends React.Component {
 
   render() {
     const { totalScore, wordCorrectCount, wordIncorrectCount, nextWord, isCorrect, answer} = this.context;
-    console.log(totalScore)
     return (
       <>
       {this.renderFeedBack()}
       <h2>Translate the word:</h2>
       <span className='cypress'>{nextWord}</span>
       <p className='DisplayScore'>
-        Your total score is: {this.context.totalScore}
+        Your total score is: {this.state.totalScore}
       </p>
       <p className='current-word'>
         {nextWord
@@ -113,8 +143,8 @@ export default class Learn extends React.Component {
       <input type='text' id='learn-guess-input' onChange={e => this.handleGuessField(e.target.value)} required></input>
       {this.renderSubmitButton()}
       </form>
-      <p id='correct'>You have answered this word correctly {wordCorrectCount} times.</p>
-      <p id='incorrect'>You have answered this word incorrectly {wordIncorrectCount} times.</p>
+      <p id='correct'>You have answered this word correctly {this.state.correctScore} times.</p>
+      <p id='incorrect'>You have answered this word incorrectly {this.state.incorrectScore} times.</p>
       {this.renderNextButton()}
       </>
     )
