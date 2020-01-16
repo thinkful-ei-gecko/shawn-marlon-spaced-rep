@@ -23,7 +23,7 @@ export default class Learn extends React.Component {
     })
     .then(() => {
       this.setState({
-        totalScore: this.context.currentWord.total_Score,
+        totalScore: this.context.currentWord.totalScore,
         correctScore: this.context.currentWord.wordCorrectCount,
         incorrectScore: this.context.currentWord.wordIncorrectCount,
         nextWord: this.context.currentWord.nextWord
