@@ -22,7 +22,6 @@ export default class Dashboard extends React.Component {
 
   generateAlphabet = () => {
     const words = this.props.words.sort((a, b) => a.id - b.id)
-    console.log(words)
     return words.map(word => {
       return(
         <li key={word.id}>
@@ -30,9 +29,11 @@ export default class Dashboard extends React.Component {
           <p>
             {word.original
             .split('')
-            .map(char => char === '.' ?'\u2689' : '\u268A')
+            .map(char => char === '.' ?'\u25CF' : '\u268A')
             .join('')}
           </p>
+          <p className="word-score">Correct Score: {word.correct_count}</p>
+          <p className="word-score">Incorrect Score: {word.incorrect_count}</p>
         </li>
       )
     })
@@ -126,7 +127,6 @@ export default class Dashboard extends React.Component {
   
 
   render() {
-    console.log(this.props.language)
     return (
       <div className='dashboard'>
         <h2 className='cypress'>

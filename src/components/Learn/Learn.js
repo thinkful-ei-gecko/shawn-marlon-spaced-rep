@@ -9,23 +9,24 @@ export default class Learn extends React.Component {
   state = {
     guess: '',
     answered: false,
+    wordCorrectCount: 0,
+    wordIncorrectCount: 0,
+    nextWord: '',
   }
 
   componentDidMount() {
     ApiService.getLanguageHead()
     .then(res => {
+      this.context.setCurrentWord(res)
       this.context.updateNextWord(res.nextWord)
-      this.context.updateWordCorrectCount(res.wordCorrectCount)
-      this.context.updateWordIncorrectCount(res.wordIncorrectCount)
-      this.context.updateTotalScore(res.total_score)
-      this.context.updateAnswer(res.translation)
-      this.context.updateIsCorrect(res.isCorrect)
+      this.context.updateTotalScore(res.totalScore)
     })
     .then(() => {
       this.setState({
-        totalScore: this.context.totalScore,
-        correctScore: this.context.wordCorrectCount,
-        incorrectScore: this.context.wordIncorrectCount,
+        totalScore: this.context.currentWord.total_Score,
+        correctScore: this.context.currentWord.wordCorrectCount,
+        incorrectScore: this.context.currentWord.wordIncorrectCount,
+        nextWord: this.context.currentWord.nextWord
       })
     })
 
@@ -56,56 +57,58 @@ export default class Learn extends React.Component {
     this.setState({
       answered: false,
       isCorrect: null,
-      totalScore: this.context.totalScore,
-      correctScore: this.context.wordCorrectCount,
-      incorrectScore: this.context.wordIncorrectCount,
     })
     ApiService.getLanguageHead()
     .then(res => {
+      this.context.setCurrentWord(res)
       this.context.updateNextWord(res.nextWord)
-      this.context.updateWordCorrectCount(res.wordCorrectCount)
-      this.context.updateWordIncorrectCount(res.wordIncorrectCount)
-      this.context.updateTotalScore(res.total_score)
-      this.context.updateAnswer(res.translation)
-      this.context.updateIsCorrect(res.isCorrect)
+    })
+    .then(() => {
+      this.setState({
+        totalScore: this.context.currentWord.totalScore,
+        correctScore: this.context.currentWord.wordCorrectCount,
+        incorrectScore: this.context.currentWord.wordIncorrectCount,
+      })
     })
   }
 
   renderFeedBack = () => {
-    if(this.context.isCorrect === true) {
-      return (
-        <div className='feedback'>
-          <h2>You were correct! :D</h2>
-          <p>The correct translation was {this.context.answer} </p>
-        </div>
-      )
-    }
-    else if (this.context.isCorrect === false) {
-      return (
-        <div className='feedback'>
-          <h2>Good try, but but not quite right :(</h2>
-          <p>The correct translation was {this.context.answer} </p>
-        </div>
-      )
+    if(this.state.answered === true) {
+      if(this.context.isCorrect === true) {
+        return (
+          <div className='feedback'>
+            <h3>You were correct! :D</h3>
+            <p>The correct translation for {this.context.currentWord.nextWord} was {this.context.answer} and you chose {this.state.guess}!</p>
+          </div>
+        )
+        }
+       else {
+        return (
+          <div className='feedback'>
+            <h3>Good try, but not quite right :(</h3>
+            <p>The correct translation for {this.context.currentWord.nextWord} was {this.context.answer} and you chose {this.state.guess}!</p>
+          </div>
+        )
+      }
     }
   }
 
   handleSubmitAnswer = e => {
     e.preventDefault();
-    console.log('Submit fired!')
     this.setState({
       answered: true,
     })
+    document.getElementById('learn-guess-input').value='';
     ApiService.postGuess({guess: this.state.guess})
     .then(res => {
       this.context.updateWordCorrectCount(res.wordCorrectCount)
       this.context.updateWordIncorrectCount(res.wordIncorrectCount)
-      this.context.updateTotalScore(res.total_score)
+      this.context.updateTotalScore(res.totalScore)
       this.context.updateAnswer(res.answer)
       this.context.updateIsCorrect(res.isCorrect)
+      this.setState({nextWord: res.nextWord})
       if(res.isCorrect) {
         this.setState({
-          totalScore: this.state.totalScore +1,
           correctScore: this.state.correctScore + 1}
           )
       }
@@ -123,30 +126,33 @@ export default class Learn extends React.Component {
 
   render() {
     const { totalScore, wordCorrectCount, wordIncorrectCount, nextWord, isCorrect, answer} = this.context;
-    return (
-      <>
-      {this.renderFeedBack()}
-      <h2>Translate the word:</h2>
-      <span className='cypress'>{nextWord}</span>
-      <p className='DisplayScore'>
-        Your total score is: {this.state.totalScore}
-      </p>
-      <p className='current-word'>
-        {nextWord
-            .split('')
-            .map(char => char === '.' ?'\u2689' : '\u268A')
-            .join('')}
-      </p>
-
-      <form onSubmit={this.handleSubmitAnswer}>
-      <label for='learn-guess-input'>What's the translation for this word?</label>
-      <input type='text' id='learn-guess-input' onChange={e => this.handleGuessField(e.target.value)} required></input>
-      {this.renderSubmitButton()}
-      </form>
-      <p id='correct'>You have answered this word correctly {this.state.correctScore} times.</p>
-      <p id='incorrect'>You have answered this word incorrectly {this.state.incorrectScore} times.</p>
-      {this.renderNextButton()}
-      </>
-    )
+      return (
+        <>
+        <h2>Translate the word:</h2>
+        <div className="DisplayFeedback">
+        {this.renderFeedBack()}
+        </div>
+        <div className="DisplayScore">
+        <p>
+        Your total score is: {this.context.totalScore}
+        </p>
+        </div>
+        <span className='cypress'>{this.state.nextWord}</span>
+        <p className='current-word'>
+          {nextWord
+              .split('')
+              .map(char => char === '.' ?'\u25CF' : '\u268A')
+              .join('')}
+        </p>
+        <form onSubmit={this.handleSubmitAnswer}>
+        <label for='learn-guess-input'>What's the translation for this word?</label>
+        <input type='text' id='learn-guess-input' onChange={e => this.handleGuessField(e.target.value)} required></input>
+        {this.renderSubmitButton()}
+        </form>
+        <p id='correct'>You have answered this word correctly {this.state.correctScore} times.</p>
+        <p id='incorrect'>You have answered this word incorrectly {this.state.incorrectScore} times.</p>
+        {this.renderNextButton()}
+        </>
+      )
   }
 }

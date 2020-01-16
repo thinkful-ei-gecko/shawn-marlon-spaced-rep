@@ -4,12 +4,16 @@
   flex-direction: column;
   justify-content: center;
   align-content: center;
-  margin-top: 2%;
+  margin-top: 15%;
   width: 90%;
   margin-left: auto;
   margin-right: auto;
   background-color: white;
   text-align: center;
+}
+
+.learn h2 {
+  font-size: 1.2em;
 }
 
 .learn h3 {
@@ -28,6 +32,8 @@
 
 .current-word {
   font-size: 3em;
+  margin: 0.25em;
+  padding: 0;
 }
 
 .learn form {
@@ -73,22 +79,31 @@
 #correct {
   padding: 1em;
   background-color: #eee;
+  border-bottom: 1px solid black;
   margin: 0;
 }
 
 #incorrect {
   padding: 1em;
   margin: 0;
-  color: white;
-  background-color: black;
+  background-color: #eee;
+  border-bottom: 1px solid black;
 }
 
 @media only screen and (min-device-width : 768px) {
   .learn {
-    width: 30%;
+    width: 60%;
   }
 
   .learn input {
     width: 33%;
   }
 }
+
+@media only screen and (min-device-width : 1024px) {
+  .learn {
+    width: 40%;
+    margin-top: 1%;
+  }
+}
+

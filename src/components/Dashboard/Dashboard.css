@@ -42,7 +42,7 @@
 
 .alphabet li {
   display: inline-block;
-  width: 40%;
+  width: 45%;
   text-align: center;
   margin: 3px;
   border: 1px solid black;
@@ -60,7 +60,8 @@
   margin-left: auto;
   margin-right: auto;
   padding: 0;
-  background-color: white;
+  background-color: black;
+  color: white;
   width: 99%;
   text-align: center;
 }
@@ -79,6 +80,11 @@
   font-size: 1em;
 }
 
+.word-score {
+  font-size: 0.6em;
+  margin: 0.5em;
+}
+
 @media only screen and (min-device-width : 768px) {
  .dashboard {
    margin-top: 1%;
@@ -90,4 +96,9 @@
  .alphabet li {
    width: 30%;
  }
+
+ .word-score {
+  font-size: 0.5em;
+  margin: 0.5em;
+}
 }

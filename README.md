@@ -3,6 +3,11 @@ This app allows uers to practice learning a language through the spaced repetiti
 
 The currently available language option in this app is morse corde.
 
+##Links
+* Live Application: https://spaced-morse.now.sh/
+* Client repo:
+* Server repo:
+
 ## Team members:
 Shawn Collette
 Marlon Agno
@@ -14,6 +19,4 @@ CSS3
 
 ## Running project
 This project was created with `create-react-app`.  Run npm start to run in development mode and an npm install for the project dependencies.
-
-## Live webiste
-The live app can be found at https://spaced-morse.now.sh/
+ 

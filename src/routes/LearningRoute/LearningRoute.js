@@ -9,7 +9,6 @@ class LearningRoute extends Component {
   static contextType = UserContext;
 
   render() {
-    console.log(this.context.currentWord)
     return (
       <section className='learn'>
        <Learn />
